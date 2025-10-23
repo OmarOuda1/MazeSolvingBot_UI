@@ -19,6 +19,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const loadSelectedMazeBtn = document.getElementById('load-selected-maze-btn');
     const mazeNameInput = document.getElementById('maze-name-input');
     const startSolvingBtn = document.getElementById('start-solving-btn');
+    const loader = document.querySelector('#solve-maze-modal .loader');
 
     // Close buttons
     const closeBtns = document.querySelectorAll('.close-btn');
@@ -36,11 +37,15 @@ document.addEventListener('DOMContentLoaded', () => {
 
         websocket.onmessage = (event) => {
             console.log('Message from server: ', event.data);
-            const [type, data] = event.data.split(':');
+            const [type, data] = event.data.split(/:(.*)/s);
             if (type === 'maze_solution') {
                 const [name, solution] = data.split(';');
                 saveMaze(name, solution);
                 alert(`Maze "${name}" solved and saved!`);
+                resetSolveMazeModal();
+            } else if (type === 'maze_fail') {
+                alert(`Failed to solve maze: ${data}`);
+                resetSolveMazeModal();
             }
         };
 
@@ -65,6 +70,14 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Initialize WebSocket on page load
     initWebSocket();
+
+    const resetSolveMazeModal = () => {
+        solveMazeModal.style.display = 'none';
+        loader.classList.add('hidden');
+        mazeNameInput.classList.remove('hidden');
+        startSolvingBtn.classList.remove('hidden');
+        mazeNameInput.value = '';
+    };
 
     // --- Maze Storage ---
     const getMazes = () => {
@@ -148,8 +161,9 @@ document.addEventListener('DOMContentLoaded', () => {
         const mazeName = mazeNameInput.value.trim();
         if (mazeName) {
             sendMessage(`start_solving:${mazeName}`);
-            mazeNameInput.value = '';
-            solveMazeModal.style.display = 'none';
+            mazeNameInput.classList.add('hidden');
+            startSolvingBtn.classList.add('hidden');
+            loader.classList.remove('hidden');
         } else {
             alert('Please enter a name for the maze.');
         }
