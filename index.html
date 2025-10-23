@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Robot Controller</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <div class="card" id="main-menu">
+            <h1>Robot Controller</h1>
+            <p>Select a mode or command to begin.</p>
+            <button id="rc-mode-btn">RC Mode</button>
+            <button id="load-maze-btn">Load Maze</button>
+            <button id="solve-maze-btn">Solve Maze</button>
+            <button id="line-following-btn">Start Line Following</button>
+        </div>
+
+        <div id="rc-view" class="hidden">
+            <h1>RC Mode</h1>
+            <div id="joystick-container"></div>
+            <button id="rc-back-btn">Back to Menu</button>
+        </div>
+    </div>
+
+    <!-- Load Maze Modal -->
+    <div id="load-maze-modal" class="modal">
+        <div class="modal-content">
+            <span class="close-btn">&times;</span>
+            <h2>Load Maze</h2>
+            <div id="maze-list"></div>
+            <button id="load-selected-maze-btn">Load</button>
+        </div>
+    </div>
+
+    <!-- Solve Maze Modal -->
+    <div id="solve-maze-modal" class="modal">
+        <div class="modal-content">
+            <span class="close-btn">&times;</span>
+            <h2>Solve Maze</h2>
+            <input type="text" id="maze-name-input" placeholder="Enter maze name">
+            <button id="start-solving-btn">Start Solving</button>
+        </div>
+    </div>
+
+    <script src="vendor/nipplejs.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
