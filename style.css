@@ -71,6 +71,12 @@ button {
     display: block;
     margin-bottom: 10px;
     font-weight: bold;
+    color: #00f5d4;
+}
+
+#settings-back-btn {
+    background-color: transparent;
+    border: 2px solid #00f5d4;
 }
 
 input[type="range"] {
@@ -299,7 +305,8 @@ input[type="text"] {
     display: none;
 }
 
-#rc-view {
+#rc-view,
+#settings-view {
     background-color: #2a2a3e;
     padding: 40px;
     border-radius: 20px;

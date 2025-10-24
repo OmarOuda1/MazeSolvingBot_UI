@@ -3,6 +3,8 @@ document.addEventListener('DOMContentLoaded', () => {
     const mainMenu = document.getElementById('main-menu');
     const rcView = document.getElementById('rc-view');
 
+    const settingsView = document.getElementById('settings-view');
+
     // Buttons
     const rcModeBtn = document.getElementById('rc-mode-btn');
     const loadMazeBtn = document.getElementById('load-maze-btn');
@@ -11,11 +13,11 @@ document.addEventListener('DOMContentLoaded', () => {
     const settingsBtn = document.getElementById('settings-btn');
     const stopBtn = document.getElementById('stop-btn');
     const rcBackBtn = document.getElementById('rc-back-btn');
+    const settingsBackBtn = document.getElementById('settings-back-btn');
 
     // Modals
     const loadMazeModal = document.getElementById('load-maze-modal');
     const solveMazeModal = document.getElementById('solve-maze-modal');
-    const settingsModal = document.getElementById('settings-modal');
 
     // Modal components
     const mazeList = document.getElementById('maze-list');
@@ -114,16 +116,26 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     };
 
-    // --- Settings Modal ---
+    // --- Settings View ---
     const maxSpeedSlider = document.getElementById('max-speed-slider');
     const maxSpeedValue = document.getElementById('max-speed-value');
     const kpInput = document.getElementById('kp-input');
     const kiInput = document.getElementById('ki-input');
     const kdInput = document.getElementById('kd-input');
-    const saveSettingsBtn = document.getElementById('save-settings-btn');
+
+    const sendSettings = () => {
+        const settings = {
+            max_speed: parseInt(maxSpeedSlider.value),
+            kp: parseFloat(kpInput.value),
+            ki: parseFloat(kiInput.value),
+            kd: parseFloat(kdInput.value)
+        };
+        sendMessage(`settings:${JSON.stringify(settings)}`);
+    };
 
     const updateMaxSpeedValue = () => {
         maxSpeedValue.textContent = maxSpeedSlider.value;
+        sendSettings();
     };
 
     maxSpeedSlider.addEventListener('input', updateMaxSpeedValue);
@@ -139,23 +151,22 @@ document.addEventListener('DOMContentLoaded', () => {
                 value -= step;
             }
             input.value = value.toFixed(1);
+            sendSettings();
         });
     });
 
-    settingsBtn.addEventListener('click', () => {
-        settingsModal.style.display = 'block';
+    [kpInput, kiInput, kdInput].forEach(input => {
+        input.addEventListener('change', sendSettings);
     });
 
-    saveSettingsBtn.addEventListener('click', () => {
-        const settings = {
-            max_speed: parseInt(maxSpeedSlider.value),
-            kp: parseFloat(kpInput.value),
-            ki: parseFloat(kiInput.value),
-            kd: parseFloat(kdInput.value)
-        };
-        sendMessage(`settings:${JSON.stringify(settings)}`);
-        settingsModal.style.display = 'none';
-        alert('Settings saved!');
+    settingsBtn.addEventListener('click', () => {
+        mainMenu.classList.add('hidden');
+        settingsView.classList.remove('hidden');
+    });
+
+    settingsBackBtn.addEventListener('click', () => {
+        mainMenu.classList.remove('hidden');
+        settingsView.classList.add('hidden');
     });
 
     // --- Joystick ---
@@ -253,7 +264,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 modal.style.display = 'none';
                 if (modal === solveMazeModal) {
                     sendMessage('abort');
-                    resetSolveMaze-modal();
+                    resetSolveMazeModal();
                 }
             }
         });
