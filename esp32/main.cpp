@@ -141,6 +141,24 @@ void setup() {
     webSocket.onEvent(onWebSocketEvent);
 }
 
+void sendErrorData() {
+    static float angle = 0;
+    float error = sin(angle) * 10;
+    angle += 0.1;
+    if (angle > 2 * PI) {
+        angle -= 2 * PI;
+    }
+    webSocket.broadcastTXT("error_data:" + String(error));
+}
+
 void loop() {
+    static unsigned long lastErrorTime = 0;
+    unsigned long now = millis();
+
+    if (now - lastErrorTime > 100) { // Send data every 100ms
+        lastErrorTime = now;
+        sendErrorData();
+    }
+
     webSocket.loop();
 }

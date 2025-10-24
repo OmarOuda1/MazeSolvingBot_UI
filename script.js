@@ -52,6 +52,8 @@ document.addEventListener('DOMContentLoaded', () => {
             } else if (type === 'maze_fail') {
                 alert(`Failed to solve maze: ${data}`);
                 resetSolveMazeModal();
+            } else if (type === 'error_data') {
+                addDataToChart(parseFloat(data));
             }
         };
 
@@ -169,6 +171,66 @@ document.addEventListener('DOMContentLoaded', () => {
         settingsView.classList.add('hidden');
     });
 
+    // --- Error Chart ---
+    let errorChart;
+    const createErrorChart = () => {
+        const ctx = document.getElementById('error-chart').getContext('2d');
+        errorChart = new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: [],
+                datasets: [{
+                    label: 'Error',
+                    data: [],
+                    borderColor: '#00f5d4',
+                    backgroundColor: 'rgba(0, 245, 212, 0.1)',
+                    borderWidth: 2,
+                    pointRadius: 0,
+                    tension: 0.4
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                scales: {
+                    x: {
+                        type: 'linear',
+                        display: false
+                    },
+                    y: {
+                        min: -10,
+                        max: 10,
+                        ticks: {
+                            color: '#e0e0e0'
+                        },
+                        grid: {
+                            color: 'rgba(224, 224, 224, 0.2)'
+                        }
+                    }
+                },
+                plugins: {
+                    legend: {
+                        display: false
+                    }
+                }
+            }
+        });
+    };
+
+    const addDataToChart = (data) => {
+        if (!errorChart) return;
+        const labels = errorChart.data.labels;
+        labels.push(labels.length);
+        errorChart.data.datasets[0].data.push(data);
+
+        // Limit the number of data points
+        if (labels.length > 50) {
+            labels.shift();
+            errorChart.data.datasets[0].data.shift();
+        }
+        errorChart.update();
+    };
+
     // --- Joystick ---
     const createJoystick = () => {
         const options = {
@@ -279,4 +341,6 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         }
     });
+
+    createErrorChart();
 });
