@@ -61,6 +61,14 @@ button {
     border: 2px solid #00f5d4;
 }
 
+#stop-btn {
+    background: linear-gradient(90deg, #e52d27, #b31217);
+}
+
+#stop-btn:hover {
+    box-shadow: 0 5px 15px rgba(229, 45, 39, 0.4);
+}
+
 .loader {
     border: 4px solid #f3f3f3;
     border-radius: 50%;
@@ -96,6 +104,15 @@ button:hover {
 #rc-mode-btn:hover {
     background-color: #00f5d4;
     color: #1a1a2e;
+}
+
+#load-maze-btn,
+#solve-maze-btn,
+#line-following-btn,
+#stop-btn,
+.modal-content button {
+    color: #1a1a2e;
+    font-weight: bold;
 }
 
 /* Modal styles */

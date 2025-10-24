@@ -8,6 +8,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const loadMazeBtn = document.getElementById('load-maze-btn');
     const solveMazeBtn = document.getElementById('solve-maze-btn');
     const lineFollowingBtn = document.getElementById('line-following-btn');
+    const stopBtn = document.getElementById('stop-btn');
     const rcBackBtn = document.getElementById('rc-back-btn');
 
     // Modals
@@ -19,6 +20,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const loadSelectedMazeBtn = document.getElementById('load-selected-maze-btn');
     const mazeNameInput = document.getElementById('maze-name-input');
     const startSolvingBtn = document.getElementById('start-solving-btn');
+    const abortSolvingBtn = document.getElementById('abort-solving-btn');
     const loader = document.querySelector('#solve-maze-modal .loader');
 
     // Close buttons
@@ -76,6 +78,7 @@ document.addEventListener('DOMContentLoaded', () => {
         loader.classList.add('hidden');
         mazeNameInput.classList.remove('hidden');
         startSolvingBtn.classList.remove('hidden');
+        abortSolvingBtn.classList.add('hidden');
         mazeNameInput.value = '';
     };
 
@@ -140,8 +143,13 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     rcBackBtn.addEventListener('click', () => {
+        sendMessage('abort');
         mainMenu.classList.remove('hidden');
         rcView.classList.add('hidden');
+    });
+
+    stopBtn.addEventListener('click', () => {
+        sendMessage('abort');
     });
 
     loadMazeBtn.addEventListener('click', () => {
@@ -164,9 +172,15 @@ document.addEventListener('DOMContentLoaded', () => {
             mazeNameInput.classList.add('hidden');
             startSolvingBtn.classList.add('hidden');
             loader.classList.remove('hidden');
+            abortSolvingBtn.classList.remove('hidden');
         } else {
             alert('Please enter a name for the maze.');
         }
+    });
+
+    abortSolvingBtn.addEventListener('click', () => {
+        sendMessage('abort');
+        resetSolveMazeModal();
     });
 
     loadSelectedMazeBtn.addEventListener('click', () => {
@@ -188,8 +202,12 @@ document.addEventListener('DOMContentLoaded', () => {
     // --- Modal Closing Logic ---
     closeBtns.forEach(btn => {
         btn.addEventListener('click', () => {
-            loadMazeModal.style.display = 'none';
-            solveMazeModal.style.display = 'none';
+            if (btn.parentElement.parentElement === solveMazeModal) {
+                sendMessage('abort');
+                resetSolveMazeModal();
+            } else {
+                loadMazeModal.style.display = 'none';
+            }
         });
     });
 
@@ -198,7 +216,8 @@ document.addEventListener('DOMContentLoaded', () => {
             loadMazeModal.style.display = 'none';
         }
         if (event.target == solveMazeModal) {
-            solveMazeModal.style.display = 'none';
+            sendMessage('abort');
+            resetSolveMazeModal();
         }
     });
 });
