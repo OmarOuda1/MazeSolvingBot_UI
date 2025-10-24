@@ -8,12 +8,14 @@ document.addEventListener('DOMContentLoaded', () => {
     const loadMazeBtn = document.getElementById('load-maze-btn');
     const solveMazeBtn = document.getElementById('solve-maze-btn');
     const lineFollowingBtn = document.getElementById('line-following-btn');
+    const settingsBtn = document.getElementById('settings-btn');
     const stopBtn = document.getElementById('stop-btn');
     const rcBackBtn = document.getElementById('rc-back-btn');
 
     // Modals
     const loadMazeModal = document.getElementById('load-maze-modal');
     const solveMazeModal = document.getElementById('solve-maze-modal');
+    const settingsModal = document.getElementById('settings-modal');
 
     // Modal components
     const mazeList = document.getElementById('maze-list');
@@ -112,6 +114,50 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     };
 
+    // --- Settings Modal ---
+    const maxSpeedSlider = document.getElementById('max-speed-slider');
+    const maxSpeedValue = document.getElementById('max-speed-value');
+    const kpInput = document.getElementById('kp-input');
+    const kiInput = document.getElementById('ki-input');
+    const kdInput = document.getElementById('kd-input');
+    const saveSettingsBtn = document.getElementById('save-settings-btn');
+
+    const updateMaxSpeedValue = () => {
+        maxSpeedValue.textContent = maxSpeedSlider.value;
+    };
+
+    maxSpeedSlider.addEventListener('input', updateMaxSpeedValue);
+
+    document.querySelectorAll('.counter-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+            const input = btn.parentElement.querySelector('.counter-input');
+            const step = parseFloat(input.step) || 1;
+            let value = parseFloat(input.value) || 0;
+            if (btn.classList.contains('plus')) {
+                value += step;
+            } else if (btn.classList.contains('minus')) {
+                value -= step;
+            }
+            input.value = value.toFixed(1);
+        });
+    });
+
+    settingsBtn.addEventListener('click', () => {
+        settingsModal.style.display = 'block';
+    });
+
+    saveSettingsBtn.addEventListener('click', () => {
+        const settings = {
+            max_speed: parseInt(maxSpeedSlider.value),
+            kp: parseFloat(kpInput.value),
+            ki: parseFloat(kiInput.value),
+            kd: parseFloat(kdInput.value)
+        };
+        sendMessage(`settings:${JSON.stringify(settings)}`);
+        settingsModal.style.display = 'none';
+        alert('Settings saved!');
+    });
+
     // --- Joystick ---
     const createJoystick = () => {
         const options = {
@@ -202,22 +248,24 @@ document.addEventListener('DOMContentLoaded', () => {
     // --- Modal Closing Logic ---
     closeBtns.forEach(btn => {
         btn.addEventListener('click', () => {
-            if (btn.parentElement.parentElement === solveMazeModal) {
-                sendMessage('abort');
-                resetSolveMazeModal();
-            } else {
-                loadMazeModal.style.display = 'none';
+            const modal = btn.closest('.modal');
+            if (modal) {
+                modal.style.display = 'none';
+                if (modal === solveMazeModal) {
+                    sendMessage('abort');
+                    resetSolveMaze-modal();
+                }
             }
         });
     });
 
     window.addEventListener('click', (event) => {
-        if (event.target == loadMazeModal) {
-            loadMazeModal.style.display = 'none';
-        }
-        if (event.target == solveMazeModal) {
-            sendMessage('abort');
-            resetSolveMazeModal();
+        if (event.target.classList.contains('modal')) {
+            event.target.style.display = 'none';
+            if (event.target === solveMazeModal) {
+                sendMessage('abort');
+                resetSolveMazeModal();
+            }
         }
     });
 });

@@ -15,6 +15,7 @@
             <button id="load-maze-btn">Load Maze</button>
             <button id="solve-maze-btn">Solve Maze</button>
             <button id="line-following-btn">Start Line Following</button>
+            <button id="settings-btn">Settings</button>
             <button id="stop-btn">Stop</button>
         </div>
 
@@ -22,6 +23,48 @@
             <h1>RC Mode</h1>
             <div id="joystick-container"></div>
             <button id="rc-back-btn">Back to Menu</button>
+        </div>
+    </div>
+
+    <!-- Settings Modal -->
+    <div id="settings-modal" class="modal">
+        <div class="modal-content">
+            <span class="close-btn">&times;</span>
+            <h2>Settings</h2>
+
+            <div class="setting">
+                <label for="max-speed-slider">Max Speed: <span id="max-speed-value">50</span>%</label>
+                <input type="range" id="max-speed-slider" min="0" max="100" value="50">
+            </div>
+
+            <div class="setting">
+                <label for="kp-input">Kp</label>
+                <div class="counter">
+                    <button class="counter-btn minus">-</button>
+                    <input type="number" class="counter-input" id="kp-input" value="1.0" step="0.1">
+                    <button class="counter-btn plus">+</button>
+                </div>
+            </div>
+
+            <div class="setting">
+                <label for="ki-input">Ki</label>
+                <div class="counter">
+                    <button class="counter-btn minus">-</button>
+                    <input type="number" class="counter-input" id="ki-input" value="0.5" step="0.1">
+                    <button class="counter-btn plus">+</button>
+                </div>
+            </div>
+
+            <div class="setting">
+                <label for="kd-input">Kd</label>
+                <div class="counter">
+                    <button class="counter-btn minus">-</button>
+                    <input type="number" class="counter-input" id="kd-input" value="0.2" step="0.1">
+                    <button class="counter-btn plus">+</button>
+                </div>
+            </div>
+
+            <button id="save-settings-btn">Save</button>
         </div>
     </div>
 

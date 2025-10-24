@@ -9,6 +9,28 @@ const char *password = "1234567-8";
 WebSocketsServer webSocket = WebSocketsServer(81);
 volatile bool isSolving = false;
 
+// Default settings
+int maxSpeed = 50;
+float Kp = 1.0, Ki = 0.5, Kd = 0.2;
+
+void handleSettings(String payload) {
+    StaticJsonDocument<200> doc;
+    DeserializationError error = deserializeJson(doc, payload);
+
+    if (error) {
+        Serial.print(F("deserializeJson() failed: "));
+        Serial.println(error.f_str());
+        return;
+    }
+
+    maxSpeed = doc["max_speed"];
+    Kp = doc["kp"];
+    Ki = doc["ki"];
+    Kd = doc["kd"];
+
+    Serial.printf("Settings updated: max_speed=%d, Kp=%.2f, Ki=%.2f, Kd=%.2f\n", maxSpeed, Kp, Ki, Kd);
+}
+
 void handleRC(String payload) {
     int commaIndex = payload.indexOf(',');
     if (commaIndex != -1) {
@@ -85,6 +107,8 @@ void onWebSocketEvent(uint8_t num, WStype_t type, uint8_t *payload, size_t lengt
                 handleLoadMaze(data);
             } else if (command == "abort") {
                 handleAbort();
+            } else if (command == "settings") {
+                handleSettings(data);
             } else {
                 Serial.println("Unknown command received");
             }
