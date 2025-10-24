@@ -7,6 +7,7 @@ const char *ssid = "ESP32-Robot-Controller";
 const char *password = "1234567-8";
 
 WebSocketsServer webSocket = WebSocketsServer(81);
+volatile bool isSolving = false;
 
 void handleRC(String payload) {
     int commaIndex = payload.indexOf(',');
@@ -25,17 +26,36 @@ void handleStartLineFollowing() {
 
 void handleStartSolving(String mazeName) {
     Serial.printf("Start solving command received for maze: %s\n", mazeName.c_str());
-    // Add maze solving logic here
-    // For demonstration, send a dummy solution back after a delay
-    delay(5000);
-    String solution = "RFRFRF"; // Dummy solution
-    String message = "maze_solution:" + mazeName + ";" + solution;
-    webSocket.broadcastTXT(message);
+    isSolving = true;
+
+    // Simulate a long-running maze-solving process
+    for (int i = 0; i < 10; i++) {
+        if (!isSolving) {
+            Serial.println("Maze solving aborted!");
+            webSocket.broadcastTXT("maze_fail:aborted by user");
+            return;
+        }
+        Serial.printf("Solving step %d...\n", i + 1);
+        delay(1000);
+    }
+
+    if (isSolving) {
+        String solution = "RFRFRF"; // Dummy solution
+        String message = "maze_solution:" + mazeName + ";" + solution;
+        webSocket.broadcastTXT(message);
+    }
+    isSolving = false;
 }
 
 void handleLoadMaze(String mazeSolution) {
     Serial.printf("Load maze command received with solution: %s\n", mazeSolution.c_str());
     // Add logic to execute the maze solution
+}
+
+void handleAbort() {
+    Serial.println("Abort command received");
+    isSolving = false;
+    // Add any other necessary cleanup or motor stop logic here
 }
 
 void onWebSocketEvent(uint8_t num, WStype_t type, uint8_t *payload, size_t length) {
@@ -63,6 +83,8 @@ void onWebSocketEvent(uint8_t num, WStype_t type, uint8_t *payload, size_t lengt
                 handleStartSolving(data);
             } else if (command == "load_maze") {
                 handleLoadMaze(data);
+            } else if (command == "abort") {
+                handleAbort();
             } else {
                 Serial.println("Unknown command received");
             }
