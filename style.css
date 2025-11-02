@@ -4,7 +4,7 @@
     --celadon: #b3dec1ff;
     --mint-green: #dbf9f0ff;
     --tea-rose-red: #efc7c2ff;
-    --air-force-blue: #598392ff;
+    --caribbean-current: #00635dff;
 }
 
 @font-face {
@@ -37,7 +37,7 @@ body {
 }
 
 .card {
-    background-color: var(--air-force-blue);
+    background-color: var(--caribbean-current);
     padding: 40px;
     border-radius: 20px;
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
@@ -233,7 +233,7 @@ button:hover {
 }
 
 .modal-content {
-    background-color: var(--air-force-blue);
+    background-color: var(--caribbean-current);
     margin: 15% auto;
     padding: 30px;
     border-radius: 15px;
@@ -310,7 +310,7 @@ input[type="text"] {
 
 #rc-view,
 #settings-view {
-    background-color: var(--air-force-blue);
+    background-color: var(--caribbean-current);
     padding: 40px;
     border-radius: 20px;
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
