@@ -9,7 +9,6 @@ document.addEventListener('DOMContentLoaded', () => {
     const rcModeBtn = document.getElementById('rc-mode-btn');
     const loadMazeBtn = document.getElementById('load-maze-btn');
     const solveMazeBtn = document.getElementById('solve-maze-btn');
-    const lineFollowingBtn = document.getElementById('line-following-btn');
     const settingsBtn = document.getElementById('settings-btn');
     const stopBtn = document.getElementById('stop-btn');
     const rcBackBtn = document.getElementById('rc-back-btn');
@@ -182,8 +181,8 @@ document.addEventListener('DOMContentLoaded', () => {
                 datasets: [{
                     label: 'Error',
                     data: [],
-                    borderColor: '#00f5d4',
-                    backgroundColor: 'rgba(0, 245, 212, 0.1)',
+                    borderColor: getComputedStyle(document.documentElement).getPropertyValue('--celadon'),
+                    backgroundColor: 'rgba(179, 222, 193, 0.1)',
                     borderWidth: 2,
                     pointRadius: 0,
                     tension: 0.4
@@ -237,7 +236,7 @@ document.addEventListener('DOMContentLoaded', () => {
             zone: document.getElementById('joystick-container'),
             mode: 'static',
             position: { left: '50%', top: '50%' },
-            color: '#00f5d4',
+            color: getComputedStyle(document.documentElement).getPropertyValue('--celadon'),
             size: 150
         };
         const manager = nipplejs.create(options);
@@ -278,10 +277,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
     solveMazeBtn.addEventListener('click', () => {
         solveMazeModal.style.display = 'block';
-    });
-
-    lineFollowingBtn.addEventListener('click', () => {
-        sendMessage('start_line_following');
     });
 
     startSolvingBtn.addEventListener('click', () => {

@@ -1,3 +1,12 @@
+:root {
+    /* CSS HEX */
+    --space-cadet: #1a1a2eff;
+    --celadon: #b3dec1ff;
+    --mint-green: #dbf9f0ff;
+    --tea-rose-red: #efc7c2ff;
+    --air-force-blue: #598392ff;
+}
+
 @font-face {
   font-family: 'Roboto';
   font-style: normal;
@@ -14,8 +23,8 @@
 
 body {
     font-family: 'Roboto', sans-serif;
-    background-color: #1a1a2e;
-    color: #e0e0e0;
+    background-color: var(--space-cadet);
+    color: var(--mint-green);
     display: flex;
     justify-content: center;
     align-items: center;
@@ -28,7 +37,7 @@ body {
 }
 
 .card {
-    background-color: #2a2a3e;
+    background-color: var(--air-force-blue);
     padding: 40px;
     border-radius: 20px;
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
@@ -36,7 +45,7 @@ body {
 }
 
 h1 {
-    color: #00f5d4;
+    color: var(--celadon);
     margin-bottom: 10px;
 }
 
@@ -50,16 +59,24 @@ button {
     margin-bottom: 15px;
     border: none;
     border-radius: 10px;
-    color: white;
+    color: var(--space-cadet);
     font-size: 16px;
     cursor: pointer;
     transition: all 0.3s ease;
+    font-weight: bold;
 }
 
 #rc-mode-btn {
     background-color: transparent;
-    border: 2px solid #00f5d4;
+    border: 2px solid var(--celadon);
+    color: var(--celadon);
 }
+
+#rc-mode-btn:hover {
+    background-color: var(--celadon);
+    color: var(--space-cadet);
+}
+
 
 /* Settings Modal styles */
 .setting {
@@ -71,13 +88,20 @@ button {
     display: block;
     margin-bottom: 10px;
     font-weight: bold;
-    color: #00f5d4;
+    color: var(--celadon);
 }
 
 #settings-back-btn {
     background-color: transparent;
-    border: 2px solid #00f5d4;
+    border: 2px solid var(--celadon);
+    color: var(--celadon);
 }
+
+#settings-back-btn:hover {
+    background-color: var(--celadon);
+    color: var(--space-cadet);
+}
+
 
 .chart-container {
     margin-top: 20px;
@@ -90,7 +114,7 @@ input[type="range"] {
     appearance: none;
     width: 100%;
     height: 10px;
-    background: #1a1a2e;
+    background: var(--space-cadet);
     border-radius: 5px;
     outline: none;
     opacity: 0.7;
@@ -106,7 +130,7 @@ input[type="range"]::-webkit-slider-thumb {
     appearance: none;
     width: 25px;
     height: 25px;
-    background: #00f5d4;
+    background: var(--celadon);
     cursor: pointer;
     border-radius: 50%;
 }
@@ -114,7 +138,7 @@ input[type="range"]::-webkit-slider-thumb {
 input[type="range"]::-moz-range-thumb {
     width: 25px;
     height: 25px;
-    background: #00f5d4;
+    background: var(--celadon);
     cursor: pointer;
     border-radius: 50%;
 }
@@ -126,8 +150,8 @@ input[type="range"]::-moz-range-thumb {
 }
 
 .counter-btn {
-    background-color: #00f5d4;
-    color: #1a1a2e;
+    background-color: var(--celadon);
+    color: var(--space-cadet);
     border: none;
     width: 30px;
     height: 30px;
@@ -144,9 +168,9 @@ input[type="range"]::-moz-range-thumb {
     width: 80px;
     text-align: center;
     font-size: 18px;
-    background-color: #1a1a2e;
-    color: #e0e0e0;
-    border: 1px solid #00f5d4;
+    background-color: var(--space-cadet);
+    color: var(--mint-green);
+    border: 1px solid var(--celadon);
     border-radius: 5px;
     margin: 0 10px;
     padding: 5px;
@@ -164,17 +188,13 @@ input[type=number] {
 }
 
 #stop-btn {
-    background: linear-gradient(90deg, #e52d27, #b31217);
-}
-
-#stop-btn:hover {
-    box-shadow: 0 5px 15px rgba(229, 45, 39, 0.4);
+    background-color: var(--tea-rose-red);
 }
 
 .loader {
-    border: 4px solid #f3f3f3;
+    border: 4px solid var(--mint-green);
     border-radius: 50%;
-    border-top: 4px solid #00f5d4;
+    border-top: 4px solid var(--celadon);
     width: 30px;
     height: 30px;
     animation: spin 1s linear infinite;
@@ -186,41 +206,18 @@ input[type=number] {
     100% { transform: rotate(360deg); }
 }
 
-#load-maze-btn {
-    background: linear-gradient(90deg, #00f5d4, #00bbf9);
-}
-
-#solve-maze-btn {
-    background: linear-gradient(90deg, #00f5d4, #00bbf9);
-}
-
-#line-following-btn,
+#load-maze-btn,
+#solve-maze-btn,
 #settings-btn {
-    background: linear-gradient(90deg, #00f5d4, #00bbf9);
+    background-color: var(--celadon);
 }
 
-#settings-btn {
-    background: linear-gradient(90deg, #f9d423, #f8a11e);
-}
 
 button:hover {
     transform: translateY(-2px);
-    box-shadow: 0 5px 15px rgba(0, 245, 212, 0.3);
+    filter: brightness(1.1);
 }
 
-#rc-mode-btn:hover {
-    background-color: #00f5d4;
-    color: #1a1a2e;
-}
-
-#load-maze-btn,
-#solve-maze-btn,
-#line-following-btn,
-#stop-btn,
-.modal-content button {
-    color: #1a1a2e;
-    font-weight: bold;
-}
 
 /* Modal styles */
 .modal {
@@ -236,7 +233,7 @@ button:hover {
 }
 
 .modal-content {
-    background-color: #2a2a3e;
+    background-color: var(--air-force-blue);
     margin: 15% auto;
     padding: 30px;
     border-radius: 15px;
@@ -244,7 +241,7 @@ button:hover {
     width: 80%;
     max-width: 400px;
     position: relative;
-    color: #e0e0e0;
+    color: var(--mint-green);
 }
 
 .close-btn {
@@ -260,13 +257,13 @@ button:hover {
 
 .close-btn:hover,
 .close-btn:focus {
-    color: #00f5d4;
+    color: var(--celadon);
     text-decoration: none;
     cursor: pointer;
 }
 
 .modal-content h2 {
-    color: #00f5d4;
+    color: var(--celadon);
     text-align: center;
     margin-bottom: 20px;
 }
@@ -275,7 +272,7 @@ button:hover {
     margin-bottom: 20px;
     max-height: 200px;
     overflow-y: auto;
-    border: 1px solid #00f5d4;
+    border: 1px solid var(--celadon);
     border-radius: 5px;
     padding: 10px;
 }
@@ -288,8 +285,8 @@ button:hover {
 }
 
 #maze-list .maze-item:hover, #maze-list .maze-item.selected {
-    background-color: #00f5d4;
-    color: #1a1a2e;
+    background-color: var(--celadon);
+    color: var(--space-cadet);
 }
 
 input[type="text"] {
@@ -297,14 +294,14 @@ input[type="text"] {
     padding: 10px;
     margin-bottom: 20px;
     border-radius: 5px;
-    border: 1px solid #00f5d4;
-    background-color: #1a1a2e;
-    color: #e0e0e0;
+    border: 1px solid var(--celadon);
+    background-color: var(--space-cadet);
+    color: var(--mint-green);
     font-size: 16px;
 }
 
 .modal-content button {
-    background: linear-gradient(90deg, #00f5d4, #00bbf9);
+    background-color: var(--celadon);
 }
 
 .hidden {
@@ -313,7 +310,7 @@ input[type="text"] {
 
 #rc-view,
 #settings-view {
-    background-color: #2a2a3e;
+    background-color: var(--air-force-blue);
     padding: 40px;
     border-radius: 20px;
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
@@ -326,11 +323,17 @@ input[type="text"] {
     width: 200px;
     height: 200px;
     margin: 0 auto 30px;
-    background: #1a1a2e;
+    background: var(--space-cadet);
     border-radius: 50%;
 }
 
 #rc-back-btn {
     background-color: transparent;
-    border: 2px solid #00f5d4;
+    border: 2px solid var(--celadon);
+    color: var(--celadon);
+}
+
+#rc-back-btn:hover {
+    background-color: var(--celadon);
+    color: var(--space-cadet);
 }
