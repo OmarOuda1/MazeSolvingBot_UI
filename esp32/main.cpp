@@ -41,11 +41,6 @@ void handleRC(String payload) {
     }
 }
 
-void handleStartLineFollowing() {
-    Serial.println("Start line following command received");
-    // Add line following logic here
-}
-
 void handleStartSolving(String mazeName) {
     Serial.printf("Start solving command received for maze: %s\n", mazeName.c_str());
     isSolving = true;
@@ -99,8 +94,6 @@ void onWebSocketEvent(uint8_t num, WStype_t type, uint8_t *payload, size_t lengt
 
             if (command == "rc") {
                 handleRC(data);
-            } else if (command == "start_line_following") {
-                handleStartLineFollowing();
             } else if (command == "start_solving") {
                 handleStartSolving(data);
             } else if (command == "load_maze") {
